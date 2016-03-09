@@ -37,7 +37,7 @@ PyObject* PyRangeType::__call__(vector<PyObject*>* args) {
     
     switch (args->size()) {
         case 1:
-            if ((*args)[0]->getType()->typeId() != PyIntType) {
+            if ((*args)[0]->getType()->typeId() != PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }
             
@@ -46,10 +46,10 @@ PyObject* PyRangeType::__call__(vector<PyObject*>* args) {
             increment = 1;
             break;
         case 2:
-            if ((*args)[0]->getType()->typeId()!=PyIntType) {
+            if ((*args)[0]->getType()->typeId()!=PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }
-            if ((*args)[1]->getType()->typeId()!=PyIntType) {
+            if ((*args)[1]->getType()->typeId()!=PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }
             
@@ -58,13 +58,13 @@ PyObject* PyRangeType::__call__(vector<PyObject*>* args) {
             increment = 1;
             break;
         case 3:
-            if ((*args)[0]->getType()->typeId()!=PyIntType) {
+            if ((*args)[0]->getType()->typeId()!=PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }
-            if ((*args)[1]->getType()->typeId()!=PyIntType) {
+            if ((*args)[1]->getType()->typeId()!=PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }
-            if ((*args)[2]->getType()->typeId()!=PyIntType) {
+            if ((*args)[2]->getType()->typeId()!=PyIntTypeId) {
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION,"range arguments must be of int type.");
             }            
             start = ((PyInt*) ((*args)[2]))->getVal();

@@ -37,7 +37,7 @@ string PyType::toString() {
 }
 
 PyType* PyType::getType() {
-    return PyTypes[PyTypeType];
+    return PyTypes[PyTypeTypeId];
 }
 
 PyTypeId PyType::typeId() {
@@ -67,7 +67,7 @@ PyObject* PyType::__type__(vector<PyObject*>* args) {
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
-    return PyTypes[PyTypeType];
+    return PyTypes[PyTypeTypeId];
 }
 
 /* Not to be confused with the callMethod method, the __call__ method is called

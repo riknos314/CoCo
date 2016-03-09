@@ -74,10 +74,10 @@ PyObject* PyInt::__add__(vector<PyObject*>* args) {
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
-        case PyIntType:
+        case PyIntTypeId:
             x = (PyInt*) arg;
             return new PyInt(this->val + x->val);
-        case PyFloatType:
+        case PyFloatTypeId:
             y = (PyFloat*) arg;
             return new PyFloat(this->val + y->getVal());
         default:
@@ -98,10 +98,10 @@ PyObject* PyInt::__sub__(vector<PyObject*>* args) {
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
-        case PyIntType:
+        case PyIntTypeId:
             x = (PyInt*) arg;
             return new PyInt(this->val - x->val);
-        case PyFloatType:
+        case PyFloatTypeId:
             y = (PyFloat*) arg;
             return new PyFloat(this->val - y->getVal());
         default:
@@ -122,11 +122,11 @@ PyObject* PyInt::__mul__(vector<PyObject*>* args) {
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
-        case PyIntType:
+        case PyIntTypeId:
             x = (PyInt*) arg;
             return new PyInt(this->val * x->val);
 
-        case PyFloatType:
+        case PyFloatTypeId:
             y = (PyFloat*) arg;
             return new PyFloat(this->val * y->getVal());
 
@@ -148,13 +148,13 @@ PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
-        case PyIntType:
+        case PyIntTypeId:
             x = (PyInt*) arg;
             if (x->val == 0)
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
             return new PyFloat(this->val / x->val);
 
-        case PyFloatType:
+        case PyFloatTypeId:
             y = (PyFloat*) arg;
             if (y->getVal() == 0)
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
@@ -178,13 +178,13 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
-        case PyIntType:
+        case PyIntTypeId:
             x = (PyInt*) arg;
             if (x->val == 0)
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
             return new PyInt(this->val / x->val);
 
-        case PyFloatType:
+        case PyFloatTypeId:
             y = (PyFloat*) arg;
             if (y->getVal() == 0)
                 throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: integer division or modulo by zero");
@@ -270,7 +270,7 @@ PyObject* PyInt::__ge__(vector<PyObject*>* args) {
 }
 
 PyType* PyInt::getType() {
-    return PyTypes[PyIntType];
+    return PyTypes[PyIntTypeId];
 }
 
 PyObject* PyInt::__float__(vector<PyObject*>* args) {

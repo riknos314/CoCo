@@ -25,6 +25,7 @@
 #include "PyStrIterator.h"
 #include "PyList.h"
 #include "PyFunList.h"
+#include <string>
 #include <sstream>
 using namespace std;
 
@@ -34,6 +35,7 @@ PyStr::PyStr(string s) : PyObject() {
     dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__add__);
     dict["__float__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__float__);
     dict["__int__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__int__);
+    dict["__list__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__list__);
     dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__bool__);
     dict["__funlist__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__funlist__);
     dict["__eq__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyStr::__eq__);
@@ -83,6 +85,24 @@ PyObject* PyStr::__float__(vector<PyObject*>* args) {
         throw new PyException(PYILLEGALOPERATIONEXCEPTION,"could not convert string to float: '"+this->toString()+"'");
     }
 }
+
+PyObject* PyStr::__list__(vector<PyObject*>* args) {
+    ostringstream msg;
+    vector<PyObject*>* v = new vector<PyObject*>();
+    string s;
+
+    int k;
+
+    for(k=0; k<val.length(); k++) {
+        s = val[k];
+        v->push_back(new PyStr(s));
+
+        new PyList(v);
+    }
+}
+
+
+
 
 PyObject* PyStr::__int__(vector<PyObject*>* args) {
     ostringstream msg;

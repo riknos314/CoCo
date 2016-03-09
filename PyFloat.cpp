@@ -62,7 +62,7 @@ PyObject* PyFloat::__add__(vector<PyObject*>* args) {
 }
 
 PyType* PyFloat::getType() {
-    return PyTypes[PyFloatType];
+    return PyTypes[PyFloatTypeId];
 }
 
 double PyFloat::getVal() {

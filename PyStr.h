@@ -40,6 +40,7 @@ protected:
     PyObject* __str__(vector<PyObject*>* args);
     PyObject* __float__(vector<PyObject*>* args);
     PyObject* __int__(vector<PyObject*>* args);
+    PyObject* __list__(vector<PyObject*>* args);
     PyObject* __bool__(vector<PyObject*>* args); 
     PyObject* __funlist__(vector<PyObject*>* args); 
     PyObject* __eq__(vector<PyObject*>* args);

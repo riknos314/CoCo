@@ -38,7 +38,7 @@ PyList::~PyList() {
 }
 
 PyType* PyList::getType() {
-    return PyTypes[PyListType];
+    return PyTypes[PyListTypeId];
 }
 
 void PyList::setVal(int index, PyObject* obj) {

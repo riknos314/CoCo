@@ -1,0 +1,4 @@
+*.o
+.deps/
+Makefile
+__pycache__/

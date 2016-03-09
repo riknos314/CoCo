@@ -72,21 +72,24 @@
 #include "PyParser.h"
 #include "PyCode.h"
 #include "PyObject.h"
-#include "PyInt.h"
 #include "PyType.h"
+#include "PyTypeType.h"
 #include "PyFunction.h"
 #include "PyBuiltInPrint.h"
 #include "PyBuiltInFPrint.h"
 #include "PyBuiltInTPrint.h"
 #include "PyException.h"
 #include "PyExceptionType.h"
+#include "PyIntType.h"
 #include "PyBuiltInInput.h"
 #include "PyStr.h"
-#include "PyFloat.h"
-#include "PyBool.h"
+#include "PyFloatType.h"
+#include "PyBoolType.h"
+#include "PyNoneType.h"
 #include "PyRange.h"
 #include "PyRangeType.h"
 #include "PyRangeIterator.h"
+#include "PyListType.h"
 #include "PyBuiltInIter.h"
 #include "PyBuiltInLen.h"
 #include "PyBuiltInConcat.h"
@@ -157,20 +160,20 @@ unordered_map<PyTypeId, PyType*, std::hash<int> > initTypes() {
 
     unordered_map<PyTypeId, PyType*, std::hash<int> > types;
 
-    PyType* typeType = new PyType("type", PyTypeType);
-    types[PyTypeType] = typeType;
+    PyType* typeType = new PyTypeType("type", PyTypeTypeId);
+    types[PyTypeTypeId] = typeType;
 
-    PyType* noneType = new PyType("NoneType", PyNoneType);
-    types[PyNoneType] = noneType;
+    PyType* noneType = new PyNoneType("NoneType", PyNoneTypeId);
+    types[PyNoneTypeId] = noneType;
 
-    PyType* boolType = new PyType("bool", PyBoolType);
-    types[PyBoolType] = boolType;
+    PyType* boolType = new PyBoolType("bool", PyBoolTypeId);
+    types[PyBoolTypeId] = boolType;
 
-    PyType* intType = new PyType("int", PyIntType);
-    types[PyIntType] = intType;
+    PyType* intType = new PyIntType("int", PyIntTypeId);
+    types[PyIntTypeId] = intType;
 
-    PyType* floatType = new PyType("float", PyFloatType);
-    types[PyFloatType] = floatType;
+    PyType* floatType = new PyFloatType("float", PyFloatTypeId);
+    types[PyFloatTypeId] = floatType;
 
     PyType* strType = new PyType("str", PyStrType);
     types[PyStrType] = strType;
@@ -190,8 +193,8 @@ unordered_map<PyTypeId, PyType*, std::hash<int> > initTypes() {
     PyType* rangeIteratorType = new PyType("range_iterator", PyRangeIteratorType);
     types[PyRangeIteratorType] = rangeIteratorType;
 
-    PyType* listType = new PyType("list", PyListType);
-    types[PyListType] = listType;
+    PyType* listType = new PyListType("list", PyListTypeId);
+    types[PyListTypeId] = listType;
 
     PyType* funListType = new PyType("funlist", PyFunListType);
     types[PyFunListType] = funListType;
@@ -279,13 +282,13 @@ int main(int argc, char* argv[]) {
         globals["tprint"] = new PyBuiltInTPrint();
         globals["input"] = new PyBuiltInInput();
         globals["iter"] = new PyBuiltInIter();
-        globals["int"] = PyTypes[PyIntType];
-        globals["float"] = PyTypes[PyFloatType];
+        globals["int"] = PyTypes[PyIntTypeId];
+        globals["float"] = PyTypes[PyFloatTypeId];
         globals["str"] = PyTypes[PyStrType];
         globals["funlist"] = PyTypes[PyFunListType];
-        globals["list"] = PyTypes[PyListType];
-        globals["type"] = PyTypes[PyTypeType];
-        globals["bool"] = PyTypes[PyBoolType];
+        globals["list"] = PyTypes[PyListTypeId];
+        globals["type"] = PyTypes[PyTypeTypeId];
+        globals["bool"] = PyTypes[PyBoolTypeId];
         globals["range"] = PyTypes[PyRangeTypeId];
         globals["Exception"] = PyTypes[PyExceptionTypeId];
         globals["len"] = new PyBuiltInLen();

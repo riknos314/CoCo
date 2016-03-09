@@ -30,7 +30,7 @@ PyNone::~PyNone() {
 }
 
 PyType* PyNone::getType() {
-    return PyTypes[PyNoneType];
+    return PyTypes[PyNoneTypeId];
 }
 
 string PyNone::toString() {

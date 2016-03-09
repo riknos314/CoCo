@@ -31,17 +31,17 @@
 using namespace std;
 
 enum PyTypeId {
-    PyTypeType,
-    PyNoneType,
-    PyBoolType,
-    PyIntType,
-    PyFloatType,
+    PyTypeTypeId,
+    PyNoneTypeId,
+    PyBoolTypeId,
+    PyIntTypeId,
+    PyFloatTypeId,
     PyStrType,
     PyFunctionType,
     PyBuiltInType,
     PyRangeTypeId,
     PyRangeIteratorType,
-    PyListType,
+    PyListTypeId,
     PyListIteratorType,
     PyFunListType,
     PyFunListIteratorType,

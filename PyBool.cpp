@@ -67,7 +67,7 @@ PyObject* PyBool::__eq__(vector<PyObject*>* args) {
 }
 
 PyType* PyBool::getType() {
-    return PyTypes[PyBoolType];
+    return PyTypes[PyBoolTypeId];
 }
 
 bool PyBool::getVal() {

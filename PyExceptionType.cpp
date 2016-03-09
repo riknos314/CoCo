@@ -43,7 +43,7 @@ PyObject* PyExceptionType::__call__(vector<PyObject*>* args) {
     if (args->size() == 1)
         return new PyException(PYEXCEPTION, (*args)[0]);
 
-    if ((*args)[0]->getType()->typeId() != PyIntType)
+    if ((*args)[0]->getType()->typeId() != PyIntTypeId)
         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "TypeError: expected int for first argument to Exception.");
     
     exctype = ((PyInt*) (*args)[0])->getVal();
