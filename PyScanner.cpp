@@ -88,6 +88,7 @@ PyToken* PyScanner::getToken() {
                 else if (c == '(') state = 9;
                 else if (c == ')') state = 10;
                 else if (c == ';') state = 12;
+                else if (c == '+') state = 13;
                 else if (c == -1) {
                     foundOne = true;
                     type = PYEOFTOKEN;
@@ -214,6 +215,14 @@ PyToken* PyScanner::getToken() {
                     lineCount++;
                     state = 0;
                     lex = "";
+                }
+                break;
+            case 13: 
+                if (isDigit(c)) 
+                    state = 2;
+                else {
+                    type = PYBADTOKEN;
+                    foundOne = true;                    
                 }
                 break;
         }

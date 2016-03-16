@@ -36,6 +36,7 @@ enum PyTypeId {
     PyBoolTypeId,
     PyIntTypeId,
     PyFloatTypeId,
+    PyComplexTypeId,
     PyStrType,
     PyFunctionType,
     PyBuiltInType,

@@ -1,0 +1,86 @@
+Function: main/0
+Constants: None, 1j, 2.345, 3j, 4, 2j, 4j, 1, 2, 3, (-1+0j), (2.345-3j), (4+2j), -4, (-4-2j), -4, (-4-4j)
+Locals: z, x, y, u
+Globals: print, type, complex
+BEGIN
+          LOAD_GLOBAL                    0
+          LOAD_CONST                    10
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                    11
+          STORE_FAST                     0
+          LOAD_CONST                    12
+          STORE_FAST                     1
+          LOAD_CONST                    14
+          STORE_FAST                     2
+          LOAD_CONST                    16
+          STORE_FAST                     3
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      0
+          BINARY_ADD               
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      0
+          BINARY_SUBTRACT          
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      0
+          BINARY_MULTIPLY          
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      0
+          BINARY_TRUE_DIVIDE       
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      2
+          BINARY_ADD               
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      3
+          BINARY_ADD               
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_GLOBAL                    1
+          LOAD_FAST                      1
+          CALL_FUNCTION                  1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    2
+          LOAD_CONST                     7
+          LOAD_CONST                     8
+          CALL_FUNCTION                  2
+          STORE_FAST                     1
+          LOAD_GLOBAL                    2
+          LOAD_CONST                     9
+          LOAD_CONST                     4
+          CALL_FUNCTION                  2
+          STORE_FAST                     2
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      2
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_GLOBAL                    0
+          LOAD_FAST                      1
+          LOAD_FAST                      2
+          BINARY_MULTIPLY          
+          CALL_FUNCTION                  1
+          POP_TOP                  
+          LOAD_CONST                     0
+          RETURN_VALUE             
+END

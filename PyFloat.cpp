@@ -30,6 +30,9 @@ using namespace std;
 PyFloat::PyFloat(double f) : PyObject() {
     val = f;
     dict["__add__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__add__);
+    dict["__sub__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__sub__);
+    dict["__mul__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__mul__);
+    dict["__truediv__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__truediv__);
     dict["__float__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__float__);
     dict["__int__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__int__);
     dict["__bool__"] = (PyObject* (PyObject::*)(vector<PyObject*>*)) (&PyFloat::__bool__);
@@ -43,7 +46,7 @@ PyFloat::~PyFloat() {
 
 string PyFloat::toString() {
     char buffer[50];
-    sprintf(buffer,"%1.1f",val);
+    sprintf(buffer,"%1.4f",val);
     stringstream ss;
     ss << buffer;
     return ss.str();
@@ -57,8 +60,79 @@ PyObject* PyFloat::__add__(vector<PyObject*>* args) {
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
     }
     
-    PyFloat* arg2 = (PyFloat*) (*args)[0];
-    return new PyFloat(this->val + arg2->val);
+    //make sure that passing in an int as a parameter works properly
+    PyObject* arg2 = (PyObject*) (*args)[0];
+    PyFloat* argVal;
+    if (arg2->getType()==PyTypes[PyIntTypeId]) {
+        PyInt* newInt = (PyInt*) arg2;
+        argVal = new PyFloat(newInt->getVal());
+    } else {
+        argVal = (PyFloat*) arg2;
+    }
+    return new PyFloat(this->val + argVal->getVal());
+}
+
+PyObject* PyFloat::__sub__(vector<PyObject*>* args) {
+    ostringstream msg;
+
+    if (args->size() != 1) {
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+    }
+    
+    //make sure that passing in an int as a parameter works properly
+    PyObject* arg2 = (PyObject*) (*args)[0];
+    PyFloat* argVal;
+    if (arg2->getType()==PyTypes[PyIntTypeId]) {
+        PyInt* newInt = (PyInt*) arg2;
+        argVal = new PyFloat(newInt->getVal());
+    } else {
+        argVal = (PyFloat*) arg2;
+    }
+    return new PyFloat(this->val - argVal->getVal());
+}
+
+PyObject* PyFloat::__mul__(vector<PyObject*>* args) {
+    ostringstream msg;
+
+    if (args->size() != 1) {
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+    }
+    
+    //make sure that passing in an int as a parameter works properly
+    PyObject* arg2 = (PyObject*) (*args)[0];
+    PyFloat* argVal;
+    if (arg2->getType()==PyTypes[PyIntTypeId]) {
+        PyInt* newInt = (PyInt*) arg2;
+        argVal = new PyFloat(newInt->getVal());
+    } else {
+        argVal = (PyFloat*) arg2;
+    }
+    return new PyFloat(this->val * argVal->getVal());
+}
+
+PyObject* PyFloat::__truediv__(vector<PyObject*>* args) {
+    ostringstream msg;
+
+    if (args->size() != 1) {
+        msg << "TypeError: expected 1 arguments, got " << args->size();
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+    }
+    
+    //make sure that passing in an int as a parameter works properly
+    PyObject* arg2 = (PyObject*) (*args)[0];
+    PyFloat* argVal;
+    if (arg2->getType()==PyTypes[PyIntTypeId]) {
+        PyInt* newInt = (PyInt*) arg2;
+        argVal = new PyFloat(newInt->getVal());
+    } else {
+        argVal = (PyFloat*) arg2;
+    }
+    if (argVal->getVal() == 0) {
+        throw new PyException(PYILLEGALOPERATIONEXCEPTION, "ZeroDivisionError: division by zero");
+    }
+    return new PyFloat(this->val / argVal->getVal());
 }
 
 PyType* PyFloat::getType() {

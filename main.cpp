@@ -86,6 +86,7 @@
 #include "PyFloatType.h"
 #include "PyBoolType.h"
 #include "PyNoneType.h"
+#include "PyComplexType.h"
 #include "PyRange.h"
 #include "PyRangeType.h"
 #include "PyRangeIterator.h"
@@ -174,6 +175,9 @@ unordered_map<PyTypeId, PyType*, std::hash<int> > initTypes() {
 
     PyType* floatType = new PyFloatType("float", PyFloatTypeId);
     types[PyFloatTypeId] = floatType;
+
+    PyType* complexType = new PyComplexType("complex", PyComplexTypeId);
+    types[PyComplexTypeId] = complexType;
 
     PyType* strType = new PyType("str", PyStrType);
     types[PyStrType] = strType;
@@ -284,6 +288,7 @@ int main(int argc, char* argv[]) {
         globals["iter"] = new PyBuiltInIter();
         globals["int"] = PyTypes[PyIntTypeId];
         globals["float"] = PyTypes[PyFloatTypeId];
+        globals["complex"] = PyTypes[PyComplexTypeId];
         globals["str"] = PyTypes[PyStrType];
         globals["funlist"] = PyTypes[PyFunListType];
         globals["list"] = PyTypes[PyListTypeId];

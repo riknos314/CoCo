@@ -58,6 +58,7 @@
 #include "PyException.h"
 #include "PyInt.h"
 #include "PyFloat.h"
+#include "PyComplex.h"
 #include "PyStr.h"
 #include "PyBool.h"
 #include "PyNone.h"
@@ -253,6 +254,11 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
             tokStr->exceptions(ios_base::failbit | ios_base::badbit);
             (*tokStr) >> iVal;
             delete tokStr;
+            tok = in->getToken();
+            if(tok->getLex()=="j") {
+                return new PyComplex(new PyInt(0), new PyInt(iVal));
+            }
+            in->putBackToken();
             return new PyInt(iVal);
             break;
         case PYFLOATTOKEN:
@@ -260,6 +266,11 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
             tokStr->exceptions(ios_base::failbit | ios_base::badbit);
             (*tokStr) >> fVal;
             delete tokStr;
+            tok = in->getToken();
+            if(tok->getLex()=="j") {
+                return new PyComplex(new PyInt(0), new PyFloat(fVal));
+            }
+            in->putBackToken();
             return new PyFloat(fVal);
             break;
         case PYSTRINGTOKEN:
@@ -300,6 +311,79 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
                 badToken(codeId, "Must be name of inner function.");
             } else
                 badToken(tok, "Expected None, int, float, str, True, or False.");
+
+        case PYLEFTPARENTOKEN:
+            PyToken* realPart;
+            PyToken* imagPart;
+            PyToken* j;
+            PyToken* closeParen;
+
+            realPart = in->getToken();
+            if (realPart->getType() != PYINTEGERTOKEN && realPart->getType() != PYFLOATTOKEN) {
+                badToken(tok, "Expected int or float");
+                break;
+            }
+
+            imagPart = in->getToken();
+            if (imagPart->getType() != PYINTEGERTOKEN && imagPart->getType() != PYFLOATTOKEN) {
+                badToken(tok, "Expected int or float");
+                break;
+            }
+
+            j = in->getToken();
+            if (j->getLex()!="j") {
+                badToken(tok, "Expected the letter 'j'");
+                break;
+            }
+
+            closeParen = in->getToken();
+            if (closeParen->getType() != PYRIGHTPARENTOKEN) {
+                badToken(tok, "Expected a right paren");
+                break;
+            }
+
+            tokStr = new istringstream(realPart->getLex());
+            tokStr->exceptions(ios_base::failbit | ios_base::badbit);
+            if (realPart->getType() == PYINTEGERTOKEN) {
+                int realVal;
+                (*tokStr) >> realVal;
+
+                tokStr = new istringstream(imagPart->getLex());
+                tokStr->exceptions(ios_base::failbit | ios_base::badbit);
+
+                if (imagPart->getType() == PYINTEGERTOKEN) {
+                    int imagVal;
+                    (*tokStr) >> imagVal;
+                    delete tokStr;
+                    return new PyComplex(new PyInt(realVal), new PyInt(imagVal));
+                } else {
+                    float imagVal;
+                    (*tokStr) >> imagVal;
+                    delete tokStr;
+                    return new PyComplex(new PyInt(realVal), new PyFloat(imagVal));
+                }
+            } else {
+                float realVal;
+                (*tokStr) >> realVal;
+
+                tokStr = new istringstream(imagPart->getLex());
+                tokStr->exceptions(ios_base::failbit | ios_base::badbit);
+
+                if (imagPart->getType() == PYINTEGERTOKEN) {
+                    int imagVal;
+                    (*tokStr) >> imagVal;
+                    delete tokStr;
+                    return new PyComplex(new PyFloat(realVal), new PyInt(imagVal));
+                } else {
+                    float imagVal;
+                    (*tokStr) >> imagVal;
+                    delete tokStr;
+                    return new PyComplex(new PyFloat(realVal), new PyFloat(imagVal));
+                }
+            }
+            
+            break;
+            
         default:
             badToken(tok, "Expected None, int, float, str, True, or False.");
             break;
