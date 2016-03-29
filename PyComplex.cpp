@@ -45,18 +45,18 @@ string PyComplex::toString() {
     realReader >> realPart;
     imagReader >> imagPart;
 
-    if (realPart != 0.0)
+    if (realPart != 0)
         ss << "(";
 
-    if (realPart != 0.0)
+    if (realPart != 0)
         ss << real->toString();
 
-    if (realPart != 0.0 && imagPart >= 0.0)
+    if (realPart != 0 && imagPart >= 0)
         ss << "+";
 
     ss << imag->toString() << "j";
 
-    if (realPart != 0.0)
+    if (realPart != 0)
         ss << ")";
 
     return ss.str();
@@ -73,7 +73,6 @@ PyObject* PyComplex::__add__(vector<PyObject*>* args) {
     PyObject* finalReal;
     PyObject* finalImag;
 
-
     if (args->size() != 1) {
         message << "TypeError: expected 1 arguments, got " << args->size();
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,message.str());  
@@ -81,13 +80,11 @@ PyObject* PyComplex::__add__(vector<PyObject*>* args) {
 
     PyObject* arg = (*args)[0];
     other = (PyComplex*) arg;
-    
 
     realVec->push_back(other->real);
     imagVec->push_back(other->imag); 
     finalReal = this->real->callMethod("__add__", realVec);
     finalImag = this->imag->callMethod("__add__", imagVec);
-    
 
     return new PyComplex(finalReal, finalImag);
 }
@@ -103,7 +100,6 @@ PyObject* PyComplex::__sub__(vector<PyObject*>* args) {
     PyObject* finalReal;
     PyObject* finalImag;
 
-
     if (args->size() != 1) {
         message << "TypeError: expected 1 arguments, got " << args->size();
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,message.str());  
@@ -111,11 +107,10 @@ PyObject* PyComplex::__sub__(vector<PyObject*>* args) {
 
     PyObject* arg = (*args)[0];
     other = (PyComplex*) arg;
-    
-
 
     realVec->push_back(other->real);
     imagVec->push_back(other->imag); 
+
     finalReal = this->real->callMethod("__sub__", realVec);
     finalImag = this->imag->callMethod("__sub__", imagVec);
 
@@ -124,12 +119,10 @@ PyObject* PyComplex::__sub__(vector<PyObject*>* args) {
 
 PyObject* PyComplex::__mul__(vector<PyObject*>* args) {
 
-
     PyObject* ac;
     PyObject* bd;
     PyObject* bc;
     PyObject* ad;
-
 
     ostringstream message;
     PyComplex* other;
@@ -140,7 +133,6 @@ PyObject* PyComplex::__mul__(vector<PyObject*>* args) {
     PyObject* finalReal;
     PyObject* finalImag;
 
-
     if (args->size() != 1) {
         message << "TypeError: expected 1 arguments, got " << args->size();
         throw new PyException(PYWRONGARGCOUNTEXCEPTION,message.str());  
@@ -148,11 +140,9 @@ PyObject* PyComplex::__mul__(vector<PyObject*>* args) {
 
     PyObject* arg = (*args)[0];
     other = (PyComplex*) arg;
-    
 
     realVec->push_back(other->real);
     imagVec->push_back(other->imag); 
-
 
     ac = this->real->callMethod("__mul__", realVec);
     bd = this->imag->callMethod("__mul__", imagVec);
@@ -164,15 +154,12 @@ PyObject* PyComplex::__mul__(vector<PyObject*>* args) {
 
     vector<PyObject*>* bdVec = new vector <PyObject*>();
     vector<PyObject*>* adVec = new vector <PyObject*>();
-    
 
     bdVec-> push_back(bd);
     adVec-> push_back(ad);
 
-
     finalReal = ac->callMethod("__sub__", bdVec);
     finalImag = bc->callMethod("__add__", adVec);
-    
 
     return new PyComplex(finalReal, finalImag);
 }
@@ -228,7 +215,6 @@ PyObject* PyComplex::__truediv__(vector<PyObject*>* args) {
 
     vector<PyObject*>* dSqVec = new vector <PyObject*>();
     dSqVec->push_back(dSq);
-
 
     PyObject* cSqPlusdSq = cSq->callMethod("__add__",dSqVec);
 
